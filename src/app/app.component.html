@@ -1,0 +1,17 @@
+<ion-app>
+  <ion-header [translucent]="true">
+    <ion-toolbar >
+      <ion-title class="toolbar-image">
+        <img src="../assets/logo.png" class="header-img"/>
+      </ion-title>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Logout
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-router-outlet style="margin-top: 70px;"></ion-router-outlet>
+</ion-app>

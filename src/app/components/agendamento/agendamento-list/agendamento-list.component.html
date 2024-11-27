@@ -1,0 +1,36 @@
+<ion-content>
+  <div class="div-button-add" style="margin-top: 30px;">
+    <button mat-mini-fab
+      matTooltip="Criar Agendamento"
+      color="primary"
+      [routerLink]="['/agendamento/create']"
+      style="margin-right: 10px; float: right;">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ion-list style="margin-top: 80px;">
+    <ng-container *ngFor="let agendamento of agendamentos">
+      <ion-item (click)="toggleExpand(agendamento.id)">
+        <ion-label>
+          <h2>{{ agendamento.data }}</h2>
+          <p>{{ agendamento.animal?.nome }}</p>
+        </ion-label>
+        <ion-icon [name]="isExpanded(agendamento.id) ? 'chevron-up' : 'chevron-down'"></ion-icon>
+      </ion-item>
+
+      <ion-item *ngIf="isExpanded(agendamento.id)" lines="none"  style="margin-left: 20px;">
+        <ion-label>
+          <p><strong>Campanha:</strong> {{ agendamento.campanhaId }}</p>
+          <p><strong>Hora:</strong> {{ agendamento.hora }}</p>
+        </ion-label>
+        <ion-button color="danger" slot="end" (click)="deleteAgendamento(agendamento.id)" *ngIf="podeExcluir(agendamento.data, agendamento.hora)">
+          <ion-icon name="trash-outline"></ion-icon>
+          Remover
+        </ion-button>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <div style="text-align: center;">
+    <mat-label *ngIf="agendamentos.length<=0">Clique no botão + para realizar um agendamento!</mat-label>
+  </div>
+</ion-content>

@@ -1,0 +1,165 @@
+<ion-content [fullscreen]="true">
+<mat-card appearance="outlined" class="card-form">
+  <form [formGroup]="pessoaForm" (ngSubmit)="onSubmit()" class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome Completo</mat-label>
+      <input matInput formControlName="nomeCompleto" required>
+      <mat-error *ngIf="pessoaForm.get('nomeCompleto')?.hasError('required')">
+        Nome Completo é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('nomeCompleto')?.hasError('maxlength')">
+        Máximo de 255 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data de Nascimento</mat-label>
+      <input matInput formControlName="dataNascimento" type="date" required>
+      <mat-error *ngIf="pessoaForm.get('dataNascimento')?.hasError('required')">
+        Data de Nascimento é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cpf" required maxlength="14">
+      <mat-error *ngIf="pessoaForm.get('cpf')?.hasError('required')">
+        CPF é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('cpf')?.hasError('maxlength')">
+        Máximo de 14 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Identidade</mat-label>
+      <input matInput formControlName="identidade" maxlength="30" required>
+      <mat-error *ngIf="pessoaForm.get('identidade')?.hasError('required')">
+        Identidade é obrigatória
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('identidade')?.hasError('maxlength')">
+        Máximo de 30 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Telefone</mat-label>
+      <input matInput formControlName="telefone" maxlength="30" required>
+      <mat-error *ngIf="pessoaForm.get('telefone')?.hasError('required')">
+        Telefone é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('telefone')?.hasError('maxlength')">
+        Máximo de 30 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" maxlength="100" required>
+      <mat-error *ngIf="pessoaForm.get('email')?.hasError('required')">
+        Email é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('email')?.hasError('email')">
+        Formato de email inválido
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('email')?.hasError('maxlength')">
+        Máximo de 100 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="margin-right: 30px;">
+      <mat-label>Gênero</mat-label>
+      <mat-select formControlName="sexoId">
+        <mat-option *ngFor="let sexo of tipoSexo" [value]="sexo.id">
+          {{ sexo.nome }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="pessoaForm.get('sexoId')?.hasError('required')">
+        O campo gênero é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Endereço</mat-label>
+      <textarea matInput formControlName="endereco" maxlength="4000" required></textarea>
+      <mat-error *ngIf="pessoaForm.get('endereco')?.hasError('required')">
+        Endereço é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('endereco')?.hasError('maxlength')">
+        Máximo de 4000 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="margin-right: 30px;">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estadoId" (selectionChange)="onEstadoChange()">
+        <mat-option *ngFor="let estado of estados" [value]="estado.id">{{ estado.nome }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="pessoaForm.get('estadoId')?.hasError('required')">
+        O campo Estado é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('estadoId')?.hasError('maxlength')">
+        Valor do campo é superior a 2 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="margin-right: 30px;">
+      <mat-label>Cidade</mat-label>
+      <mat-select formControlName="cidadeId" (selectionChange)="onCidadeChange()">
+        <mat-option *ngFor="let cidade of cidades" [value]="cidade.id">{{ cidade.nome }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="pessoaForm.get('cidadeId')?.hasError('required')">
+        O campo Cidade é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('cidadeId')?.hasError('maxlength')">
+        Valor do campo é superior a 50 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Bairro</mat-label>
+      <mat-select formControlName="bairroId">
+        <mat-option *ngFor="let bairro of bairros" [value]="bairro.id">{{ bairro.nome }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="pessoaForm.get('bairroId')?.hasError('required')">
+        O campo Bairro é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('bairroId')?.hasError('maxlength')">
+        Valor do campo é superior a 50 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CEP</mat-label>
+      <input matInput formControlName="cep" maxlength="9" required>
+      <mat-error *ngIf="pessoaForm.get('cep')?.hasError('required')">
+        CEP é obrigatório
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('cep')?.hasError('maxlength')">
+        Máximo de 9 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    
+
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="senha" type="password" maxlength="100">
+      <mat-error *ngIf="pessoaForm.get('senha')?.hasError('required')">
+        Senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="pessoaForm.get('senha')?.hasError('maxlength')">
+        Máximo de 100 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    
+    <div class="button-group">
+      <button mat-raised-button style="background-color: #61A651;" type="submit">
+      Criar
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="navigateTo()">Voltar</button>
+  </div>
+  </form>
+</mat-card>
+</ion-content>

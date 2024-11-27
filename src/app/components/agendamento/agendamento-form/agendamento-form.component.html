@@ -1,0 +1,112 @@
+<ion-content>
+  <mat-card appearance="outlined" class="card-form">
+    <mat-stepper orientation="vertical" [linear]="true" #stepper>
+      <mat-step [stepControl]="animalForm">
+        <form [formGroup]="animalForm" class="form-container">
+          <ng-template matStepLabel>Animal</ng-template>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Selecione o Animal</mat-label>
+            <mat-select formControlName="animalId" (selectionChange)="onChangeAnimal($event)">
+              <mat-option [value]="0">- Selecione um animal -</mat-option>
+              <mat-option *ngFor="let animal of animais" [value]="animal.id">{{ animal.nome }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="button-group">
+            <div style="text-align: center; color: grey; width: 100%; margin-bottom: 20px;">OU Preencha os dados do animal abaixo:</div>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Espécie</mat-label>
+            <mat-select formControlName="especieId" required>
+              <mat-option *ngFor="let especie of especies" [value]="especie.id">{{ especie.nome }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Raça</mat-label>
+            <input matInput formControlName="raca" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Gênero</mat-label>
+            <mat-select formControlName="sexoId" required>
+              <mat-option *ngFor="let sexo of sexos" [value]="sexo.id">{{ sexo.nome }}</mat-option>
+            </mat-select>
+          </mat-form-field>          
+
+          <mat-form-field appearance="outline">
+            <mat-label>Peso</mat-label>
+            <input matInput formControlName="peso" type="text" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Anos</mat-label>
+            <input matInput formControlName="ano" type="text" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Meses</mat-label>
+            <input matInput formControlName="meses" type="text" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Chip</mat-label>
+            <input matInput formControlName="chip" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Pelagem</mat-label>
+            <input matInput formControlName="pelagem" type="text">
+          </mat-form-field>
+
+          <div class="button-group">
+            <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+            <button mat-raised-button color="warn" type="button" (click)="navigateTo()">Cancelar</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="agendamentoForm">
+        <form [formGroup]="agendamentoForm" class="form-container">
+          <ng-template matStepLabel>Agendamento</ng-template>
+          <mat-form-field appearance="outline">
+            <mat-label>Campanha</mat-label>
+            <mat-select formControlName="campanhaId" required  (selectionChange)="onCampanhaChange($event)">
+              <mat-option *ngFor="let campanha of campanhas" [value]="campanha.id">
+                {{ campanha.nomecampanha }} de {{ convertDataBR(campanha.dataInicio) }} a {{ convertDataBR(campanha.dataFim) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Data</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="data" (dateChange)="onDateChange($event)" [min]="minDate" [max]="maxDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Horário</mat-label>
+            <mat-select formControlName="horario">
+              <mat-option *ngFor="let horario of horarios" [value]="horario" [disabled]="!horario.disponivel">
+                {{ horario.horaInicio }} - {{ horario.horaFim }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="button-group">
+            <button mat-raised-button color="primary" (click)="onSaveAgendamento()">Salvar</button>
+            <button mat-raised-button color="warn" matStepperPrevious>Voltar</button>
+            <button mat-raised-button color="warn" (click)="navigateTo()">Cancelar</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</ion-content>
